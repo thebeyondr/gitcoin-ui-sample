@@ -5,21 +5,21 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   ArrowUpRight,
   CheckCircle,
+  Search,
   Trash2,
   Wallet,
-  Search,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from "@/components/ui/tooltip";
 
 interface Project {
   id: string;
@@ -169,7 +169,7 @@ export default function CheckoutPage() {
             <div
               className={`flex items-center justify-center w-8 h-8 rounded-full border-2 ${
                 currentStep >= step
-                  ? "bg-primary border-primary text-primary-foreground"
+                  ? "bg-blue-600 border-blue-600 text-white"
                   : "border-muted-foreground text-muted-foreground"
               }`}
             >
@@ -221,7 +221,7 @@ export default function CheckoutPage() {
         </span>
       </div>
 
-      <div className="text-sm p-1 rounded-lg bg-blue-50">
+      <div className="text-sm px-2 py-0.5 rounded-sm bg-blue-50">
         <span>
           💠 Estimated match: This is the amount your donation could be matched
           by the funding pool, based on{" "}
