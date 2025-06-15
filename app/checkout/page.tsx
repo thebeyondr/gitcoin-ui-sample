@@ -338,7 +338,7 @@ export default function CheckoutPage() {
                           variant="ghost"
                           size="sm"
                           onClick={() => removeProject(project.id)}
-                          className="text-muted-foreground hover:text-destructive group"
+                          className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 group"
                         >
                           <Trash2 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
                         </Button>
