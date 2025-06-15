@@ -1,13 +1,12 @@
 import Image from "next/image";
-import styles from "./page.module.css";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div className="mb-32 text-center">
         <p>
           Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
+          <code className="font-mono text-sm">app/page.tsx</code>
         </p>
         <div>
           <a
@@ -19,7 +18,7 @@ export default function Home() {
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
-              className={styles.vercelLogo}
+              className="h-4 w-auto opacity-50"
               width={100}
               height={24}
               priority
@@ -28,9 +27,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={styles.center}>
+      <div className="flex flex-col items-center justify-center">
         <Image
-          className={styles.logo}
+          className="h-12 w-auto opacity-50"
           src="/next.svg"
           alt="Next.js Logo"
           width={180}
@@ -39,10 +38,10 @@ export default function Home() {
         />
       </div>
 
-      <div className={styles.grid}>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         <a
           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          className="rounded-md border border-gray-200 p-6"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -54,7 +53,7 @@ export default function Home() {
 
         <a
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          className="rounded-md border border-gray-200 p-6"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -66,7 +65,7 @@ export default function Home() {
 
         <a
           href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          className="rounded-md border border-gray-200 p-6"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -78,7 +77,7 @@ export default function Home() {
 
         <a
           href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
+          className="rounded-md border border-gray-200 p-6"
           target="_blank"
           rel="noopener noreferrer"
         >
