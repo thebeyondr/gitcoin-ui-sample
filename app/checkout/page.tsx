@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Trash2, ExternalLink, Wallet, CheckCircle } from "lucide-react";
-import Link from "next/link";
+import { ArrowUpRight, CheckCircle, Flame, Trash2, Wallet } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 interface Project {
   id: string;
@@ -146,7 +146,7 @@ export default function CheckoutPage() {
 
   const renderStepIndicator = () => (
     <div className="flex items-center justify-center mb-8">
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center">
         {[1, 2, 3].map((step) => (
           <div key={step} className="flex items-center">
             <div
@@ -179,19 +179,22 @@ export default function CheckoutPage() {
   const renderCartStep = () => (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold mb-2">Your Impact Cart</h2>
+        <h2 className="text-5xl mb-2">Your Impact Cart</h2>
         <p className="text-muted-foreground">
           Review and adjust your donations to these impact projects
         </p>
-        <p className="text-sm text-muted-foreground mt-2">
-          Your donation to each project must be valued at 1 USD or more to be
-          eligible for matching.
+        <p className="text-sm bg-amber-100 w-fit mx-auto mt-2 px-2 py-0.5">
+          Hey, giving at least $US 1 per campaign will allow us to match your
+          donation
         </p>
       </div>
 
       <div className="space-y-4">
         {projects.map((project) => (
-          <Card key={project.id} className="p-4">
+          <Card
+            key={project.id}
+            className="p-4 border-[1.5px] border-transparent hover:border-neutral-400 transition-colors duration-300 bg-neutral-50"
+          >
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-muted flex-shrink-0 overflow-hidden">
                 <Image
@@ -204,21 +207,26 @@ export default function CheckoutPage() {
               </div>
 
               <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Link
-                        href={`/projects/${project.id}`}
-                        className="font-semibold hover:underline flex items-center gap-1"
-                      >
-                        {project.name}
-                        <ExternalLink className="w-3 h-3" />
-                      </Link>
-                    </div>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {project.description}
-                    </p>
+                <div className="flex items-center justify-between gap-4">
+                  {/* <div className="flex-1"> */}
+                  <div className="flex items-center gap-2 mb-1">
+                    <Link
+                      href={`/projects/${project.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="View project details"
+                      className="group font-semibold hover:underline flex items-center gap-1 text-neutral-600 hover:text-neutral-900"
+                    >
+                      {project.name}
+                      <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                        <ArrowUpRight className="w-4 h-4" />
+                      </span>
+                    </Link>
                   </div>
+                  {/* <p className="text-sm text-muted-foreground line-clamp-2">
+                      {project.description}
+                    </p> */}
+                  {/* </div> */}
 
                   <div className="flex items-center gap-3 flex-shrink-0">
                     <div className="flex items-center gap-2">
@@ -242,8 +250,11 @@ export default function CheckoutPage() {
                       <div className="text-sm font-medium">
                         ${project.donationAmount.toFixed(2)}
                       </div>
-                      <div className="text-xs text-green-600">
-                        +${project.estimatedMatch.toFixed(2)} USD
+                      <div className="flex items-center text-xs font-medium text-green-600">
+                        <Flame className="w-3 h-3" />
+                        <span className="ml-0.5">
+                          ${project.estimatedMatch.toFixed(2)} USD
+                        </span>
                       </div>
                     </div>
 
@@ -251,9 +262,9 @@ export default function CheckoutPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => removeProject(project.id)}
-                      className="text-muted-foreground hover:text-destructive"
+                      className="text-muted-foreground hover:text-destructive group"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
                     </Button>
                   </div>
                 </div>
@@ -265,7 +276,11 @@ export default function CheckoutPage() {
 
       <Card className="p-6 bg-muted/50">
         <div className="flex justify-between items-center text-lg font-semibold">
-          <span>Total match ~${totalMatch.toFixed(2)}</span>
+          <div className="flex items-center gap-0.5">
+            <span>Estimated total match:</span>
+            <Flame className="w-5 h-5 text-green-600" />
+            <span className="text-green-600">${totalMatch.toFixed(2)}</span>
+          </div>
           <span>Total donation ${totalDonation.toFixed(2)}</span>
         </div>
       </Card>
