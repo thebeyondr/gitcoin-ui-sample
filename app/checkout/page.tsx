@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import {
   ArrowUpRight,
   CheckCircle,
-  Flame,
   Trash2,
   Wallet,
   Search,
@@ -15,6 +14,12 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
 
 interface Project {
   id: string;
@@ -191,21 +196,18 @@ export default function CheckoutPage() {
   const renderCartStep = () => (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-5xl mb-2">
-          Your Impact Cart{" "}
-          <span className="text-primary">({projects.length})</span>
-        </h2>
+        <h2 className="text-5xl mb-2">Your impact cart</h2>
         <p className="text-muted-foreground">
           Review and adjust your donations to these impact projects
         </p>
-        <p className="text-sm bg-amber-100 w-fit mx-auto mt-2 px-2 py-0.5">
-          Hey, giving at least $US 1 per campaign will allow us to match your
-          donation
+        <p className="text-base bg-blue-50 w-fit mx-auto mt-2 px-2 py-0.5">
+          Psst, giving at least $US 1 per campaign will allow us to match your
+          donation!
         </p>
       </div>
 
-      <div className="max-w-sm mx-auto">
-        <div className="relative">
+      <div className="flex items-center gap-2 justify-between">
+        <div className="relative flex-1 max-w-sm">
           <Input
             placeholder="Search projects"
             value={searchQuery}
@@ -214,101 +216,149 @@ export default function CheckoutPage() {
           />
           <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
         </div>
+        <span className="ml-2 px-3 py-1 rounded-full bg-muted text-muted-foreground text-xs font-medium whitespace-nowrap">
+          {filteredProjects.length} item{filteredProjects.length !== 1 && "s"}
+        </span>
       </div>
 
-      <div className="space-y-4">
-        {filteredProjects.map((project) => (
-          <Card
-            key={project.id}
-            className="p-4 border-[1.5px] border-transparent hover:border-neutral-400 transition-colors duration-300 bg-neutral-50"
+      <div className="text-sm p-1 rounded-lg bg-blue-50">
+        <span>
+          💠 Estimated match: This is the amount your donation could be matched
+          by the funding pool, based on{" "}
+          <Link
+            href="https://wtfisqf.com/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-full bg-muted flex-shrink-0 overflow-hidden">
-                <Image
-                  src={project.logo || "/logo.png"}
-                  alt={`${project.name} logo`}
-                  className="w-full h-full object-cover"
-                  width={40}
-                  height={40}
-                />
-              </div>
+            <Button variant="link" className="p-0 underline text-blue-600">
+              quadratic funding
+            </Button>
+          </Link>
+          .
+        </span>
+      </div>
 
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-between gap-4">
-                  {/* <div className="flex-1"> */}
-                  <div className="flex items-center gap-2 mb-1">
-                    <Link
-                      href={`/projects/${project.id}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title="View project details"
-                      className="group font-semibold hover:underline flex items-center gap-1 text-neutral-600 hover:text-neutral-900"
-                    >
-                      {project.name}
-                      <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
-                        <ArrowUpRight className="w-4 h-4" />
-                      </span>
-                    </Link>
+      <motion.div
+        className="space-y-4"
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <AnimatePresence>
+          {filteredProjects.map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 24 }}
+              transition={{ delay: i * 0.06, duration: 0.35 }}
+            >
+              <Card className="p-4 border-[1.5px] border-transparent hover:border-neutral-400 transition-colors duration-300 bg-neutral-50">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-muted flex-shrink-0 overflow-hidden ring-1 ring-neutral-200">
+                    <Image
+                      src={project.logo || "/logo.png"}
+                      alt={`${project.name} logo`}
+                      className="w-full h-full object-cover"
+                      width={40}
+                      height={40}
+                    />
                   </div>
-                  {/* <p className="text-sm text-muted-foreground line-clamp-2">
-                      {project.description}
-                    </p> */}
-                  {/* </div> */}
 
-                  <div className="flex items-center gap-3 flex-shrink-0">
-                    <div className="flex items-center gap-2">
-                      <Input
-                        type="number"
-                        value={project.donationAmount}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                          updateDonationAmount(
-                            project.id,
-                            Number.parseFloat(e.target.value) || 0
-                          )
-                        }
-                        className="w-16 text-center"
-                        min="0"
-                        step="0.01"
-                      />
-                      <span className="text-sm font-medium">USDC</span>
-                    </div>
-
-                    <div className="text-right min-w-[80px]">
-                      <div className="text-sm font-medium">
-                        ${project.donationAmount.toFixed(2)}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-4">
+                      {/* <div className="flex-1"> */}
+                      <div className="flex items-center gap-2 mb-1">
+                        <Link
+                          href={`/projects/${project.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="View project details"
+                          className="group font-semibold hover:underline flex items-center gap-1 text-neutral-600 hover:text-neutral-900"
+                        >
+                          {project.name}
+                          <span className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                            <ArrowUpRight className="w-4 h-4" />
+                          </span>
+                        </Link>
                       </div>
-                      <div className="flex items-center text-xs font-medium text-green-600">
-                        <Flame className="w-3 h-3" />
-                        <span className="ml-0.5">
-                          ${project.estimatedMatch.toFixed(2)} USD
-                        </span>
+                      {/* <p className="text-sm text-muted-foreground line-clamp-2">
+                          {project.description}
+                        </p> */}
+                      {/* </div> */}
+
+                      <div className="flex items-center gap-3 flex-shrink-0">
+                        <div className="flex items-center gap-2">
+                          <Input
+                            type="number"
+                            value={project.donationAmount}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) =>
+                              updateDonationAmount(
+                                project.id,
+                                Number.parseFloat(e.target.value) || 0
+                              )
+                            }
+                            className="w-16 text-center"
+                            min="0"
+                            step="0.01"
+                          />
+                          <span className="text-sm font-medium">USDC</span>
+                        </div>
+
+                        <div className="text-right min-w-[80px]">
+                          <div className="text-sm font-medium">
+                            ${project.donationAmount.toFixed(2)}
+                          </div>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <span className="cursor-help text-blue-600 text-sm">
+                                💠{project.estimatedMatch.toFixed(2)} USD
+                              </span>
+                            </TooltipTrigger>
+                            <TooltipContent side="top" align="center">
+                              Estimated match: The amount your donation could be
+                              matched by the funding pool, based on quadratic
+                              funding.
+                              <br />
+                              <Link
+                                href="https://wtfisqf.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="underline text-blue-600"
+                              >
+                                Learn more
+                              </Link>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeProject(project.id)}
+                          className="text-muted-foreground hover:text-destructive group"
+                        >
+                          <Trash2 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+                        </Button>
                       </div>
                     </div>
-
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeProject(project.id)}
-                      className="text-muted-foreground hover:text-destructive group"
-                    >
-                      <Trash2 className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
-                    </Button>
                   </div>
                 </div>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
+              </Card>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
 
       <Card className="p-6 bg-muted/50">
         <div className="flex justify-between items-center text-lg font-semibold">
-          <div className="flex items-center gap-0.5">
-            <span>Estimated total match:</span>
-            <Flame className="w-5 h-5 text-green-600" />
-            <span className="text-green-600">${totalMatch.toFixed(2)}</span>
-          </div>
-          <span>Total donation ${totalDonation.toFixed(2)}</span>
+          <p>Estimated match total: 💠 ${totalMatch.toFixed(2)}</p>
+
+          <span className="text-blue-500">
+            Your total donation: ${totalDonation.toFixed(2)}
+          </span>
         </div>
       </Card>
 
