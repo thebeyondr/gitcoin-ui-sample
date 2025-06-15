@@ -4,7 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { ArrowUpRight, CheckCircle, Flame, Trash2, Wallet } from "lucide-react";
+import {
+  ArrowUpRight,
+  CheckCircle,
+  Flame,
+  Trash2,
+  Wallet,
+  Search,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -114,7 +121,12 @@ const mockProjects: Project[] = [
 export default function CheckoutPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [projects, setProjects] = useState<Project[]>(mockProjects);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isWalletConnected, setIsWalletConnected] = useState(false);
+
+  const filteredProjects = projects.filter((project) =>
+    project.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const updateDonationAmount = (projectId: string, amount: number) => {
     setProjects(
@@ -159,15 +171,15 @@ export default function CheckoutPage() {
               {currentStep > step ? <CheckCircle className="w-4 h-4" /> : step}
             </div>
             <span
-              className={`ml-2 text-sm ${
+              className={`ml-2 text-sm tracking-wider font-medium font-mono ${
                 currentStep >= step
                   ? "text-foreground"
                   : "text-muted-foreground"
               }`}
             >
-              {step === 1 && "Cart"}
-              {step === 2 && "Verification"}
-              {step === 3 && "Payment"}
+              {step === 1 && "CART"}
+              {step === 2 && "VERIFICATION"}
+              {step === 3 && "PAYMENT"}
             </span>
             {step < 3 && <div className="w-8 h-px bg-muted-foreground mx-4" />}
           </div>
@@ -179,7 +191,10 @@ export default function CheckoutPage() {
   const renderCartStep = () => (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-5xl mb-2">Your Impact Cart</h2>
+        <h2 className="text-5xl mb-2">
+          Your Impact Cart{" "}
+          <span className="text-primary">({projects.length})</span>
+        </h2>
         <p className="text-muted-foreground">
           Review and adjust your donations to these impact projects
         </p>
@@ -189,8 +204,20 @@ export default function CheckoutPage() {
         </p>
       </div>
 
+      <div className="max-w-sm mx-auto">
+        <div className="relative">
+          <Input
+            placeholder="Search projects"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9"
+          />
+          <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+        </div>
+      </div>
+
       <div className="space-y-4">
-        {projects.map((project) => (
+        {filteredProjects.map((project) => (
           <Card
             key={project.id}
             className="p-4 border-[1.5px] border-transparent hover:border-neutral-400 transition-colors duration-300 bg-neutral-50"
