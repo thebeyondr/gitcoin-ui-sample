@@ -36,7 +36,7 @@ const mockProjects: Project[] = [
     name: "growthepie",
     description:
       "growthepie is a public goods data platform designed specifically for the Ethereum ecosystem to understand which chains, apps and m",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/c9/7e/71/c97e7175541195140b5b95ecb812e724.jpg",
     donationAmount: 2,
     estimatedMatch: 0,
   },
@@ -45,7 +45,7 @@ const mockProjects: Project[] = [
     name: "web3.py",
     description:
       "web3.py is the standard for interacting with the Ethereum blockchain for Python developers. The open source library garners well o",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/a7/99/74/a79974244cf44d22cbb52b1743224c33.jpg",
     donationAmount: 2,
     estimatedMatch: 0,
   },
@@ -54,7 +54,7 @@ const mockProjects: Project[] = [
     name: "Scaffold-ETH2",
     description:
       "Scaffold-Eth2 is an open-source toolkit for building decentralized applications on the Ethereum blockchain. It's designed to make",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/74/27/48/7427488283f62a753480d4f9602fe838.jpg",
     donationAmount: 2,
     estimatedMatch: 2,
   },
@@ -63,7 +63,7 @@ const mockProjects: Project[] = [
     name: "Human Passport (formerly Gitcoin Passport)",
     description:
       "Human Passport is the premier web3 native offering that enables ecosystems to protect, understand and organically grow what matter",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/c9/41/32/c9413270e0c74531a8e826ed5243574a.jpg",
     donationAmount: 2,
     estimatedMatch: 0,
   },
@@ -72,7 +72,7 @@ const mockProjects: Project[] = [
     name: "Ape Framework",
     description:
       "The most advanced smart contract framework on earth Trusted by Yearn, Lido, Curve, and more Ape is a smart contract development to",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/96/0d/ce/960dce61572b226b9f20264aceda8a97.jpg",
     donationAmount: 2,
     estimatedMatch: 0,
   },
@@ -81,7 +81,7 @@ const mockProjects: Project[] = [
     name: "Open Source Observer",
     description:
       "Open Source Observer builds technology to measure impact in the open. First, we maintain a growing registry of open source softwar",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/00/ad/d1/00add16aeafb44e4ac5294f3f37a005f.jpg",
     donationAmount: 5,
     estimatedMatch: 254.26,
   },
@@ -90,7 +90,7 @@ const mockProjects: Project[] = [
     name: "EdgeOS",
     description:
       "EdgeOS: The Open Source Stack for Network Societies The popup city and network society space is booming, with thousands of people",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/df/ff/ed/dfffed2c4a72912ca2c7df99c5a69884.jpg",
     donationAmount: 5,
     estimatedMatch: 354.64,
   },
@@ -99,7 +99,7 @@ const mockProjects: Project[] = [
     name: "Lighthouse",
     description:
       "Lighthouse is a perpetual storage protocol built on IPFS and Filecoin that allows users to store data permanently. It's the most p",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/9f/1d/c3/9f1dc3494e49b4a0d3332a059b978023.jpg",
     donationAmount: 1,
     estimatedMatch: 27.03,
   },
@@ -108,7 +108,7 @@ const mockProjects: Project[] = [
     name: "OpenZeppelin Contracts Library",
     description:
       "OpenZeppelin Contracts is the most widely used library for secure and standardized smart contract development in the Ethereum ecos",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/67/b7/4e/67b74efa7cef9e6af0f960075db7a3e3.jpg",
     donationAmount: 1,
     estimatedMatch: 20.81,
   },
@@ -117,7 +117,7 @@ const mockProjects: Project[] = [
     name: "Scaffold-ETH-Mobile",
     description:
       "⚡ Mobile (dApps... ETH Mobile is an open-source toolkit for building decentralized applications (dApps) on Ethereum and othe",
-    logo: "/logo.png",
+    logo: "https://i.pinimg.com/736x/dd/12/af/dd12afe6a2cfbfa2667c178c06efe5e2.jpg",
     donationAmount: 2,
     estimatedMatch: 39.9,
   },
@@ -259,7 +259,7 @@ export default function CheckoutPage() {
                     <Image
                       src={project.logo || "/logo.png"}
                       alt={`${project.name} logo`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-center"
                       width={40}
                       height={40}
                     />
@@ -300,7 +300,7 @@ export default function CheckoutPage() {
                                 Number.parseFloat(e.target.value) || 0
                               )
                             }
-                            className="w-16 text-center"
+                            className="w-16 text-center border-neutral-400"
                             min="0"
                             step="0.01"
                           />
@@ -326,7 +326,7 @@ export default function CheckoutPage() {
                                 href="https://wtfisqf.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="underline text-blue-600"
+                                className="underline text-blue-400"
                               >
                                 Learn more
                               </Link>
@@ -367,6 +367,7 @@ export default function CheckoutPage() {
           onClick={() => setCurrentStep(2)}
           disabled={projects.length === 0 || totalDonation === 0}
           size="lg"
+          variant="default"
         >
           Continue to Verification
         </Button>
