@@ -54,9 +54,7 @@ export default function TopNav() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <Button variant="default" className="rounded-full">
-        Connect Wallet
-      </Button>
+      <Button variant="default">Connect Wallet</Button>
     </div>
   );
 }
